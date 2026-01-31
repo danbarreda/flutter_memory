@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_memory/classes/game.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,6 +56,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int columns = 6;
+  int rows = 6;
+  Game game = Game();
 
   void _incrementCounter() {
     setState(() {
@@ -108,7 +112,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            ),/*
+            TextButton(onPressed: () => {
+              game.createGrid(rows, columns),
+              game.assignBrothers(),
+              setState(() {})
+            }, child: Text("Empezar juego")),*/
+            game.buildGrid(),
           ],
         ),
       ),
