@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_memory/classes/game.dart';
 import 'package:flutter_memory/widgets/CardWidget.dart';
 
 class MemoryCard {
     MemoryCard? brother;
     Color? color;
+    bool isFlipped = false;
+    ValueNotifier<bool> buttonEnabled = ValueNotifier<bool>(true);
     (int,int)? coordinate = (-1,-1);
 
     MemoryCard(this.coordinate);
@@ -31,9 +34,10 @@ class MemoryCard {
     }
 
     /// Construye el widget que representa la carta
-    StatefulWidget build(String image,MemoryCard? brother){
+    StatefulWidget build(String imagePath,Game game){
         return CardWidget(
-            color: this.color!,
+            card: this,
+            game: game
         );
     }
 
