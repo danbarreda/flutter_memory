@@ -7,6 +7,11 @@ class Game {
     List<List<MemoryCard>> grid = [[]];
     int rows = 6;
     int columns = 6;
+    int timeToStart = 6;
+    dynamic timer;
+    late dynamic gridWidget = buildGrid();
+    ValueNotifier<int> recentFlippedCards = ValueNotifier<int>(0);
+    ValueNotifier<int> totalFlippedCards = ValueNotifier<int>(0);
     List<dynamic> availableColors = [
         Colors.red,
         Colors.blue,
@@ -64,17 +69,39 @@ class Game {
         for(int i = 0; i < rows; i++){
             List<Widget> columnWidgets = [];
             for(int j = 0; j < columns; j++){
-                columnWidgets.add(grid[j][i].build("",grid[j][i].brother));
+                columnWidgets.add(grid[j][i].build("", this));
             }
             rowWidgets.add(Row(
+                spacing: 10,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: columnWidgets,
             ));
         }
         return Column(
+          spacing: 10,
             mainAxisAlignment: MainAxisAlignment.center,
             children: rowWidgets,
         );
     }
+
+	bool checkWin(){
+		return totalFlippedCards.value / (rows * columns) == 1;
+	}
+
+	///Retorna un componente con data del juego. Usado para debugging por los momentos
+	dynamic gameData(){
+		return Row(
+			spacing: 100,
+			mainAxisAlignment: MainAxisAlignment.center,
+			children: [
+				ValueListenableBuilder<int>(valueListenable: totalFlippedCards, builder: (context, value, child) {
+					return Text("Total de cartas volteadas: $value");
+				}),
+				ValueListenableBuilder<int>(valueListenable: recentFlippedCards, builder: (context, value, child) {
+					return Text("Cartas volteadas recientemente: $value");
+				} ),
+			],
+		);
+	}
 
 }
