@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_memory/classes/game.dart';
+import 'package:flutter_memory/screens/start_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,33 +8,46 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false, // Para que no estorbe la etiqueta roja
+      title: 'Flutter Memory',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // MIRA AQUÍ: Quitamos el MyHomePage y ponemos tu StartScreen
+      home: const StartScreen(),
     );
   }
+}
+
+// This widget is the root of your application.
+@override
+Widget build(BuildContext context) {
+  return MaterialApp(
+    title: 'Flutter Demo',
+    theme: ThemeData(
+      // This is the theme of your application.
+      //
+      // TRY THIS: Try running your application with "flutter run". You'll see
+      // the application has a purple toolbar. Then, without quitting the app,
+      // try changing the seedColor in the colorScheme below to Colors.green
+      // and then invoke "hot reload" (save your changes or press the "hot
+      // reload" button in a Flutter-supported IDE, or press "r" if you used
+      // the command line to start the app).
+      //
+      // Notice that the counter didn't reset back to zero; the application
+      // state is not lost during the reload. To reset the state, use hot
+      // restart instead.
+      //
+      // This works for code too, not just values: Most code changes can be
+      // tested with just a hot reload.
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    ),
+    home: const MyHomePage(title: 'Flutter Demo Home Page'),
+  );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -60,19 +74,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Game game = Game();
 
   @override
+  void initState() {
+    super.initState();
+    game.flipCards(); // NUEVO: Llama a la lógica de tu compañero
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-    backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: const Color(0xFF0F172A),
       appBar: AppBar(
         centerTitle: true,
         elevation: 20,
         shadowColor: Colors.cyanAccent.withOpacity(0.8),
         backgroundColor: const Color(0xFF1E293B),
         title: const Text(
-          "|FLUTTER MEMORY|", 
+          "|FLUTTER MEMORY|",
           style: TextStyle(
-            fontWeight: FontWeight.w900, 
-            fontSize: 50, 
+            fontWeight: FontWeight.w900,
+            fontSize: 50,
             letterSpacing: 3,
             color: Colors.cyanAccent,
           ),
@@ -88,13 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         child: Column(
           children: [
-            game.gameData(), 
-            Expanded(
-              child: game.gridWidget, 
-            ),
+            game.gameData(),
+            Expanded(child: game.gridWidget),
           ],
         ),
       ),
-    ); 
+    );
   }
-} 
+}
