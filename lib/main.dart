@@ -11,13 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // Para que no estorbe la etiqueta roja
+      debugShowCheckedModeBanner: false, 
       title: 'Flutter Memory',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // MIRA AQUÍ: Quitamos el MyHomePage y ponemos tu StartScreen
       home: StartScreen(),
     );
   }
@@ -76,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    game.flipCards(); // NUEVO: Llama a la lógica de tu compañero
+    game.flipCards(); 
   }
 
   @override

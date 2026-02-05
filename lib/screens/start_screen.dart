@@ -8,7 +8,6 @@ class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Usamos el color oscuro que ya tienen en el proyecto
       backgroundColor: Color(0xFF0F172A),
       body: Container(
         width: double.infinity,
@@ -65,8 +64,8 @@ class StartScreen extends StatelessWidget {
               child: Text(
                 "COMENZAR A JUGAR",
                 style: TextStyle(
-                  fontSize: 22,                    // AUMENTADO
-                  fontWeight: FontWeight.w700,     // w700 = bold
+                  fontSize: 22,                    
+                  fontWeight: FontWeight.w700,     
                   color: Colors.black,
                   letterSpacing: 3,
                 ),
