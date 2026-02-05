@@ -5,7 +5,7 @@ import 'package:flutter_memory/widgets/CardWidget.dart';
 
 class MemoryCard {
   MemoryCard? brother;
-  Color? color;
+  IconData? icon;
   ValueNotifier<bool> isFlipped = ValueNotifier<bool>(true);
   ValueNotifier<bool> buttonEnabled = ValueNotifier<bool>(true);
   (int, int)? coordinate = (-1, -1);
@@ -18,10 +18,10 @@ class MemoryCard {
   }
 
   /// Asigna un color a la carta y a su hermano si no tiene color asignado
-  void setColor(Color colorToSet) {
-    color = colorToSet;
-    if (brother != null && brother!.color == null) {
-      brother!.color = colorToSet;
+  void setIcon(IconData iconToSet) {
+    icon = iconToSet;
+    if (brother != null && brother!.icon == null) {
+      brother!.icon = iconToSet;
     }
   }
 
