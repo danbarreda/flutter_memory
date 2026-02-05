@@ -25,8 +25,6 @@ class _CardWidgetState extends State<CardWidget>
 
   @override
   void dispose() {
-    widget.game.recentFlippedCards.dispose();
-    widget.game.totalFlippedCards.dispose();
     widget.card.buttonEnabled.dispose();
     _controller.dispose();
     super.dispose();
@@ -36,29 +34,16 @@ class _CardWidgetState extends State<CardWidget>
     setState(() {});
   }
 
-  void setFlipped() => {
+  void setFlipped() {
+    if (widget.card.isFlipped.value) return;
+  
     setState(() {
-      widget.card.isFlipped.value = !widget.card.isFlipped.value;
-      if ((widget.card.isFlipped.value &&
-          widget.card.brother!.isFlipped.value)) {
-        widget.game.totalFlippedCards.value += 2;
-        widget.game.recentFlippedCards.value--;
-        widget.card.buttonEnabled.value = false;
-        widget.card.brother?.buttonEnabled.value = false;
-      } else {
-        widget.game.recentFlippedCards.value++;
-      }
-    }),
-  };
+      widget.card.isFlipped.value = true; // La volteamos visualmente
+    });
 
-  void setUnflipped() => {
-    setState(() {
-      widget.card.isFlipped.value = !widget.card.isFlipped.value;
-      if (widget.game.recentFlippedCards.value == 1) {
-        widget.game.recentFlippedCards.value--;
-      }
-    }),
-  };
+    widget.game.onCardFlipped(widget.card);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +67,7 @@ class _CardWidgetState extends State<CardWidget>
             child: TextButton(
               onPressed: widget.card.buttonEnabled.value ? setFlipped : null,
               child: Icon(
-                Icons.question_mark,  // Icono cuando está boca abajo
+                Icons.question_mark, 
                 color: Colors.white,
                 size: 30,
               ),
@@ -106,7 +91,7 @@ class _CardWidgetState extends State<CardWidget>
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: TextButton(
-                  onPressed: value ? setUnflipped : null,
+                  onPressed: null,
                   child: widget.card.icon != null
                       ? Icon(widget.card.icon, size: 30)
                       : Icon(Icons.error, size: 30),

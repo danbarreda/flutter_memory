@@ -17,7 +17,7 @@ class MemoryCard {
     return brother != null;
   }
 
-  /// Asigna un color a la carta y a su hermano si no tiene color asignado
+  /// Asigna un icono a la carta y a su hermano si no tiene asignado
   void setIcon(IconData iconToSet) {
     icon = iconToSet;
     if (brother != null && brother!.icon == null) {

@@ -9,6 +9,7 @@ class Game {
   int rows = 6;
   int columns = 6;
   int timeToStart = 6;
+  MemoryCard? firstCard;
   dynamic timer;
   final GlobalKey<GridWidgetState> gridKey = GlobalKey<GridWidgetState>();
   late Widget gridWidget = buildGrid();
@@ -44,12 +45,11 @@ Widget buildGrid() {
     return GridWidget(key: gridKey, game: this);
   }
 
-  // MÉTODO 2: Para actualizarlo después de cambios
   void refreshBoard() {
     gridKey.currentState?.refresh();
   }
 
-  /// Genera una matriz bidimensional de cartas con las dimensiones dadas (en este casos siempre sera 6x6)
+  /// Genera matriz 
   void createGrid() {
     grid = [
       for (int i = 0; i < columns; i++)
@@ -68,7 +68,7 @@ void assignBrothers() {
   }
   posiciones.shuffle();
   
-  // MEZCLA LOS ICONOS TAMBIÉN
+
   List<IconData> shuffledIcons = List.from(availableIcons);
   shuffledIcons.shuffle();
   
@@ -82,11 +82,39 @@ void assignBrothers() {
     actual.setBrother(brother);
     brother.setBrother(actual);
     
-    // CORRECCIÓN: Usa el índice módulo la longitud de la lista
     actual.setIcon(shuffledIcons[iconIndex % shuffledIcons.length]);
     iconIndex++;
   }
 }
+
+void onCardFlipped(MemoryCard secondCard) {
+    if (firstCard == null) {
+      firstCard = secondCard;
+    } else {
+      if (firstCard == secondCard) return;
+
+      if (firstCard!.brother == secondCard) {
+        totalFlippedCards.value += 2;
+        
+        firstCard!.buttonEnabled.value = false;
+        secondCard.buttonEnabled.value = false;
+        
+        firstCard = null; 
+        refreshBoard();
+        
+        if (checkWin()) {
+          print("¡Has ganado!");
+        }
+      } else {
+        Timer(const Duration(seconds: 1), () {
+          firstCard!.isFlipped.value = false;
+          secondCard.isFlipped.value = false;
+          firstCard = null; 
+          refreshBoard();   
+        });
+      }
+    }
+  }
 
 
 
@@ -172,7 +200,6 @@ class GridWidget extends StatefulWidget {
 
 class GridWidgetState extends State<GridWidget> {
   
-  /// Método público para actualizar el tablero
   void refresh() {
     if (mounted) {
       setState(() {});
