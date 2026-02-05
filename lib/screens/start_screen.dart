@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+  StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // Usamos el color oscuro que ya tienen en el proyecto
-      backgroundColor: const Color(0xFF0F172A),
+      backgroundColor: Color(0xFF0F172A),
       body: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -22,21 +22,30 @@ class StartScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "WELCOME TO FLUTTER\nMEMORY",
               textAlign: TextAlign.center,
               style: TextStyle(
+                fontFamily: 'Courier New',
                 fontSize: 60,
                 fontWeight: FontWeight.w900,
-                color: Color.fromARGB(255, 4, 154, 248),
+                color: Color.fromARGB(255, 154, 175, 188),
                 letterSpacing: 4,
+                shadows: [
+                    Shadow(
+                      color: Color.fromARGB(255, 40, 138, 138),
+                      blurRadius: 20,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+
               ),
             ),
-            const SizedBox(height: 60),
+            SizedBox(height: 60),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 5, 207, 218),
-                padding: const EdgeInsets.symmetric(
+                backgroundColor: Color.fromARGB(255, 5, 207, 218),
+                padding: EdgeInsets.symmetric(
                   horizontal: 40,
                   vertical: 20,
                 ),
@@ -49,16 +58,17 @@ class StartScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        const MyHomePage(title: 'Flutter Memory'),
+                        MyHomePage(title: 'Flutter Memory'),
                   ),
                 );
               },
-              child: const Text(
+              child: Text(
                 "COMENZAR A JUGAR",
                 style: TextStyle(
-                  color: Color(0xFF0F172A),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 22,                    // AUMENTADO
+                  fontWeight: FontWeight.w700,     // w700 = bold
+                  color: Colors.black,
+                  letterSpacing: 3,
                 ),
               ),
             ),

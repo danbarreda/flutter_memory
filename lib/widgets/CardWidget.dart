@@ -66,6 +66,7 @@ class _CardWidgetState extends State<CardWidget>
     (int, int)? coord = widget.card.coordinate;
     (int, int)? brotherCoord = widget.card.brother!.coordinate;
     bool enabled = widget.card.buttonEnabled.value;
+    
     if (!widget.card.isFlipped.value) {
       return ValueListenableBuilder(
         valueListenable: widget.card.isFlipped,
@@ -80,8 +81,10 @@ class _CardWidgetState extends State<CardWidget>
             ),
             child: TextButton(
               onPressed: widget.card.buttonEnabled.value ? setFlipped : null,
-              child: Text(
-                "Estado: $value\n Coord: $coord \n Brother: $brotherCoord",
+              child: Icon(
+                Icons.question_mark,  // Icono cuando está boca abajo
+                color: Colors.white,
+                size: 30,
               ),
             ),
           );
@@ -99,12 +102,14 @@ class _CardWidgetState extends State<CardWidget>
                 width: width * 1.5,
                 height: width,
                 decoration: BoxDecoration(
-                  color: widget.card.color,
+                  color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: TextButton(
                   onPressed: value ? setUnflipped : null,
-                  child: Text("Estado: True\n Button enabled: $enabled"),
+                  child: widget.card.icon != null
+                      ? Icon(widget.card.icon, size: 30)
+                      : Icon(Icons.error, size: 30),
                 ),
               );
             },

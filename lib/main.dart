@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // MIRA AQUÍ: Quitamos el MyHomePage y ponemos tu StartScreen
-      home: const StartScreen(),
+      home: StartScreen(),
     );
   }
 }
@@ -88,13 +88,21 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 20,
         shadowColor: Colors.cyanAccent.withOpacity(0.8),
         backgroundColor: const Color(0xFF1E293B),
-        title: const Text(
+        title: Text(
           "|FLUTTER MEMORY|",
           style: TextStyle(
             fontWeight: FontWeight.w900,
-            fontSize: 50,
-            letterSpacing: 3,
+            fontSize: 40,
+            letterSpacing: 6,
             color: Colors.cyanAccent,
+            shadows: [
+              // AGREGA SOMBRAS
+              Shadow(
+                color: Colors.blueAccent,
+                blurRadius: 15,
+                offset: Offset(3, 3),
+              ),
+            ],
           ),
         ),
       ),
